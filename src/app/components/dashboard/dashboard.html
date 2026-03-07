@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row text-center mt-3">
+    <div class="col-4">
+      <div>Series restantes: {{ remainingSets$ | async }}</div>
+    </div>
+    <div class="col-4">Serie actual: {{ currentSet$ | async }}</div>
+    <div class="col-4">
+      <button type="button" class="btn btn-danger" (click)="stopTraining()">Salir</button>
+    </div>
+  </div>
+  <div class="row text-center">
+    <div class="col-12">
+      @if ((remainingTrainingTime$ | async) !== 0) {
+        <div class="dashboard__time-remaining">{{ remainingTrainingTime$ | async }}</div>
+      }
+      @if ((remainingRestingTime$ | async) !== 0) {
+        <div class="dashboard__time-remaining">{{ remainingRestingTime$ | async }}</div>
+      }
+    </div>
+  </div>
+</div>

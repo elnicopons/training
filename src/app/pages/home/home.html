@@ -1,0 +1,47 @@
+<div class="container">
+  <form [formGroup]="form">
+    <div class="row text-center mt-3">
+      <div class="col-12">
+        <label class="me-2">Series</label>
+        <select formControlName="set">
+          @for (item of sets; track $index) {
+            <option [ngValue]="item">
+              {{ item.text }}
+            </option>
+          }
+        </select>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-12 mt-3">
+        <label class="me-2">Intervalo</label>
+        <select formControlName="interval">
+          @for (item of intervals; track $index) {
+            <option [ngValue]="item">
+              {{ item.text }}
+            </option>
+          }
+        </select>
+      </div>
+    </div>
+    <div class="row text-center mt-3">
+      <div class="col-12">
+        <label class="me-2">Descanso</label>
+        <select formControlName="rest">
+          @for (item of rests; track $index) {
+            <option [ngValue]="item">
+              {{ item.text }}
+            </option>
+          }
+        </select>
+      </div>
+    </div>
+    <div class="row text-center mt-3">
+      <div class="col-12">
+        <button type="button" class="btn btn-primary" (click)="startTraining()">
+          Comenzar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
