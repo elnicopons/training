@@ -1,9 +1,9 @@
 <div class="container">
   <form [formGroup]="form">
-    <div class="row text-center mt-3">
+    <div class="row text-center">
       <div class="col-12">
-        <label class="me-2">Series</label>
-        <select formControlName="set">
+        <label>Series</label>
+        <select class="form-select form-select-lg" formControlName="set">
           @for (item of sets; track $index) {
             <option [ngValue]="item">
               {{ item.text }}
@@ -12,10 +12,10 @@
         </select>
       </div>
     </div>
-    <div class="row text-center">
-      <div class="col-12 mt-3">
-        <label class="me-2">Intervalo</label>
-        <select formControlName="interval">
+    <div class="row text-center mt-5">
+      <div class="col-12">
+        <label>Intervalo</label>
+        <select class="form-select form-select-lg" formControlName="interval">
           @for (item of intervals; track $index) {
             <option [ngValue]="item">
               {{ item.text }}
@@ -24,10 +24,10 @@
         </select>
       </div>
     </div>
-    <div class="row text-center mt-3">
+    <div class="row text-center mt-5">
       <div class="col-12">
-        <label class="me-2">Descanso</label>
-        <select formControlName="rest">
+        <label>Descanso</label>
+        <select class="form-select form-select-lg" formControlName="rest">
           @for (item of rests; track $index) {
             <option [ngValue]="item">
               {{ item.text }}
@@ -36,10 +36,10 @@
         </select>
       </div>
     </div>
-    <div class="row text-center mt-3">
+    <div class="row text-center mt-5">
       <div class="col-12">
         <button type="button" class="btn btn-primary" (click)="startTraining()">
-          Comenzar
+          <fa-icon [icon]="faPlay"></fa-icon>
         </button>
       </div>
     </div>
