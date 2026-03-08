@@ -1,20 +1,46 @@
 <div class="container">
-  <div class="row text-center mt-3">
+  <div class="row text-center align-items-center">
     <div class="col-4">
-      <div>Series restantes: {{ remainingSets$ | async }}</div>
+      @if (state !== states.countdown) {
+        <div>
+          <div class="dashboard__sets__label">Serie</div>
+          <div class="dashboard__sets__value">{{ currentSet$ | async }}</div>
+        </div>
+      }
     </div>
-    <div class="col-4">Serie actual: {{ currentSet$ | async }}</div>
     <div class="col-4">
-      <button type="button" class="btn btn-danger" (click)="stopTraining()">Salir</button>
+      @if (state !== states.countdown) {
+        <div class="dashboard__sets">
+          <div class="dashboard__sets__label">Restantes</div>
+          <div class="dashboard__sets__value">{{ remainingSets$ | async }}</div>
+        </div>
+      }
+    </div>
+    <div class="col-4">
+      <!-- <button type="button" class="btn btn-success">
+        <fa-icon [icon]="faPlay"></fa-icon>
+      </button>
+      <button type="button" class="btn btn-warning">
+        <fa-icon [icon]="faPause"></fa-icon>
+      </button> -->
+      <button type="button" class="btn btn-danger" (click)="stopTraining()">
+        <fa-icon [icon]="faStop"></fa-icon>
+      </button>
     </div>
   </div>
-  <div class="row text-center">
+
+  <div class="row text-center mt-5">
     <div class="col-12">
-      @if ((remainingTrainingTime$ | async) !== 0) {
-        <div class="dashboard__time-remaining">{{ remainingTrainingTime$ | async }}</div>
-      }
-      @if ((remainingRestingTime$ | async) !== 0) {
-        <div class="dashboard__time-remaining">{{ remainingRestingTime$ | async }}</div>
+      @switch (state) {
+        @case (states.countdown) {
+          <div class="dashboard__time-remaining">{{ countdown$ | async | timer }}</div>
+        }
+        @case (states.training) {
+          <div class="dashboard__time-remaining">{{ remainingTrainingTime$ | async | timer }}</div>
+        }
+        @case (states.resting) {
+          <div class="dashboard__time-remaining">{{ remainingRestingTime$ | async | timer }}</div>
+        }
       }
     </div>
   </div>

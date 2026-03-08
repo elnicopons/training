@@ -1,6 +1,17 @@
+:host {
+  flex: 1;
+}
+
 .dashboard {
+  &__sets {
+    &__value {
+      font-weight: bold;
+    }
+  }
+
   &__time-remaining {
-    font-size: 3rem;
+    font-size: min(60vh, 35vw);
+    line-height: 1;
     font-weight: bold;
   }
 }

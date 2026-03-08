@@ -3,10 +3,12 @@ import { intervals, rests, sets } from '../../constants/sessions';
 import { TrainingService } from '../../services/training.service';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FontAwesomeModule],
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
 })
@@ -15,6 +17,8 @@ export class Home implements OnInit {
   intervals = intervals;
   rests = rests;
   form: FormGroup;
+
+  faPlay = faPlay;
 
   constructor(
     private trainingService: TrainingService,
