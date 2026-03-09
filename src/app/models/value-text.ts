@@ -1,4 +1,4 @@
 export interface ValueText {
-  value: number;
+  value: number | string;
   text: string;
 }

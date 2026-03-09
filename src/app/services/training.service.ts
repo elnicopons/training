@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { States } from '../constants/states.enum';
+import { StatesEnum } from '../constants/states.enum';
 
 const COUNTDOWN = 3;
 
@@ -17,7 +17,7 @@ export class TrainingService {
   remainingTrainingTime$ = new BehaviorSubject(0);
   remainingRestingTime$ = new BehaviorSubject(0);
   countdown$ = new BehaviorSubject(COUNTDOWN);
-  state$ = new BehaviorSubject<States>(States.ready);
+  state$ = new BehaviorSubject<StatesEnum>(StatesEnum.ready);
 
   private setTraining(sets: number, intervals: number, rests: number) {
     this.sets = sets;
@@ -26,7 +26,7 @@ export class TrainingService {
   }
 
   private train() {
-    this.state$.next(States.training);
+    this.state$.next(StatesEnum.training);
     this.currentSet$.next(this.currentSet$.value + 1);
     this.remainingSets$.next(--this.sets);
     this.remainingTrainingTime$.next(this.intervals);
@@ -35,7 +35,7 @@ export class TrainingService {
       if (this.remainingTrainingTime$.value === 0) {
         clearInterval(this.trainingInterval);
         if (this.remainingSets$.value > 0) {
-          this.state$.next(States.resting);
+          this.state$.next(StatesEnum.resting);
           this.remainingRestingTime$.next(this.rests);
           this.restingInterval = setInterval(() => {
             this.remainingRestingTime$.next(this.remainingRestingTime$.value - 1);
@@ -54,7 +54,7 @@ export class TrainingService {
   startTraining(sets: number, intervals: number, rests: number) {
     this.setTraining(sets, intervals, rests);
 
-    this.state$.next(States.countdown);
+    this.state$.next(StatesEnum.countdown);
     this.countDownInterval = setInterval(() => {
       this.countdown$.next(this.countdown$.value - 1);
       if (this.countdown$.value === 0) {
@@ -75,7 +75,7 @@ export class TrainingService {
     this.remainingRestingTime$.next(0);
     this.countdown$.next(COUNTDOWN);
 
-    this.state$.next(States.ready);
+    this.state$.next(StatesEnum.ready);
   }
 
   get isTrainingSet(): boolean {

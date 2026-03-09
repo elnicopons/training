@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { TimerPipe } from '../../pipes/timer';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStop, faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
-import { States } from '../../constants/states.enum';
+import { States, StatesEnum } from '../../constants/states.enum';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,7 +21,8 @@ export class Dashboard implements OnInit {
   remainingRestingTime$: BehaviorSubject<number>;
   countdown$: BehaviorSubject<number>;
   state: string;
-  states = States;
+  statesEnum = StatesEnum;
+  states = States
 
   faStop = faStop;
   faPlay = faPlay;
@@ -40,7 +41,7 @@ export class Dashboard implements OnInit {
     this.remainingRestingTime$ = this.trainingService.remainingRestingTime$;
 
     this.trainingService.state$.subscribe((state) => {
-      if (state === States.ready) {
+      if (state === StatesEnum.ready) {
         this.router.navigate(['']);
       }
 

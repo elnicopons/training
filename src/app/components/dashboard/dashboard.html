@@ -1,22 +1,46 @@
 <div class="container">
   <div class="row text-center align-items-center">
-    <div class="col-4">
-      @if (state !== states.countdown) {
+    <div class="col-6">
+      @if (state !== statesEnum.countdown) {
         <div>
           <div class="dashboard__sets__label">Serie</div>
           <div class="dashboard__sets__value">{{ currentSet$ | async }}</div>
         </div>
       }
     </div>
-    <div class="col-4">
-      @if (state !== states.countdown) {
+    <div class="col-6">
+      @if (state !== statesEnum.countdown) {
         <div class="dashboard__sets">
           <div class="dashboard__sets__label">Restantes</div>
           <div class="dashboard__sets__value">{{ remainingSets$ | async }}</div>
         </div>
       }
     </div>
-    <div class="col-4">
+  </div>
+
+  <div class="row text-center mt-5 pt-3">
+    <div class="col-12">
+      @switch (state) {
+        @case (statesEnum.countdown) {
+          <div class="dashboard__time-remaining">{{ countdown$ | async | timer }}</div>
+        }
+        @case (statesEnum.training) {
+          <div class="dashboard__time-remaining">{{ remainingTrainingTime$ | async | timer }}</div>
+        }
+        @case (statesEnum.resting) {
+          <div class="dashboard__time-remaining">{{ remainingRestingTime$ | async | timer }}</div>
+        }
+      }
+    </div>
+  </div>
+
+  <div class="row text-center mt-5 pt-3">
+    <div class="col-6">
+      @if (state === statesEnum.resting) {
+        <span>{{ states[state].text }}</span>
+      }
+    </div>
+    <div class="col-6">
       <!-- <button type="button" class="btn btn-success">
         <fa-icon [icon]="faPlay"></fa-icon>
       </button>
@@ -26,22 +50,6 @@
       <button type="button" class="btn btn-danger" (click)="stopTraining()">
         <fa-icon [icon]="faStop"></fa-icon>
       </button>
-    </div>
-  </div>
-
-  <div class="row text-center mt-5">
-    <div class="col-12">
-      @switch (state) {
-        @case (states.countdown) {
-          <div class="dashboard__time-remaining">{{ countdown$ | async | timer }}</div>
-        }
-        @case (states.training) {
-          <div class="dashboard__time-remaining">{{ remainingTrainingTime$ | async | timer }}</div>
-        }
-        @case (states.resting) {
-          <div class="dashboard__time-remaining">{{ remainingRestingTime$ | async | timer }}</div>
-        }
-      }
     </div>
   </div>
 </div>
