@@ -16,7 +16,7 @@ export class TrainingService {
   currentSet$ = new BehaviorSubject(0);
   remainingTrainingTime$ = new BehaviorSubject(0);
   remainingRestingTime$ = new BehaviorSubject(0);
-  countdown$ = new BehaviorSubject(COUNTDOWN);
+  countdown$ = new BehaviorSubject(0);
   state$ = new BehaviorSubject<StatesEnum>(StatesEnum.ready);
 
   private setTraining(sets: number, intervals: number, rests: number) {
@@ -54,6 +54,7 @@ export class TrainingService {
   startTraining(sets: number, intervals: number, rests: number) {
     this.setTraining(sets, intervals, rests);
 
+    this.countdown$.next(COUNTDOWN);
     this.state$.next(StatesEnum.countdown);
     this.countDownInterval = setInterval(() => {
       this.countdown$.next(this.countdown$.value - 1);
@@ -73,7 +74,7 @@ export class TrainingService {
     this.currentSet$.next(0);
     this.remainingTrainingTime$.next(0);
     this.remainingRestingTime$.next(0);
-    this.countdown$.next(COUNTDOWN);
+    this.countdown$.next(0);
 
     this.state$.next(StatesEnum.ready);
   }
