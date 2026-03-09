@@ -1,4 +1,15 @@
 .app {
+  &__sound {
+    position: fixed;
+    right: 0;
+    top: 0;
+
+    &__button {
+      font-size: 1rem;
+      margin: 0.75rem;
+    }
+  }
+
   &__container {
     height: 100vh;
     display: flex;

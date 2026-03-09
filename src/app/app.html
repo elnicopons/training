@@ -1,3 +1,17 @@
+<div class="app__sound">
+  <button
+    type="button"
+    class="app__sound__button btn"
+    [ngClass]="{ 'btn-light': soundOn, 'btn-secondary': !soundOn }"
+    (click)="toggleSound()"
+  >
+    @if (soundOn) {
+      <fa-icon [icon]="faBell"></fa-icon>
+    } @else {
+      <fa-icon [icon]="faBellSlash"></fa-icon>
+    }
+  </button>
+</div>
 <div class="app__container container">
   <router-outlet />
 </div>

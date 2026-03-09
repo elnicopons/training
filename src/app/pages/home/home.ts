@@ -21,9 +21,9 @@ export class Home implements OnInit {
   faPlay = faPlay;
 
   constructor(
-    private trainingService: TrainingService,
     private router: Router,
     private fb: FormBuilder,
+    private trainingService: TrainingService,
   ) {}
 
   ngOnInit() {

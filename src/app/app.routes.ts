@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
-import { Dashboard } from './components/dashboard/dashboard';
+import { Dashboard } from './pages/dashboard/dashboard';
 import { dashboardGuard } from './services/dashboard.guard';
 
 export const routes: Routes = [
