@@ -22,7 +22,8 @@ export class Dashboard implements OnInit {
   countdown$: BehaviorSubject<number>;
   state: string;
   statesEnum = StatesEnum;
-  states = States
+  states = States;
+  paused$: BehaviorSubject<boolean>;
 
   faStop = faStop;
   faPlay = faPlay;
@@ -39,6 +40,7 @@ export class Dashboard implements OnInit {
     this.currentSet$ = this.trainingService.currentSet$;
     this.remainingTrainingTime$ = this.trainingService.remainingTrainingTime$;
     this.remainingRestingTime$ = this.trainingService.remainingRestingTime$;
+    this.paused$ = this.trainingService.paused$;
 
     this.trainingService.state$.subscribe((state) => {
       if (state === StatesEnum.ready) {
@@ -49,7 +51,15 @@ export class Dashboard implements OnInit {
     });
   }
 
-  stopTraining() {
-    this.trainingService.stopTraining();
+  stop() {
+    this.trainingService.stop();
+  }
+
+  play() {
+    this.trainingService.resume();
+  }
+
+  pause() {
+    this.trainingService.pause();
   }
 }

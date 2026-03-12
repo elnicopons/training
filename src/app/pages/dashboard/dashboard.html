@@ -20,17 +20,19 @@
 
   <div class="row text-center mt-5 pt-2">
     <div class="col-12">
-      @switch (state) {
-        @case (statesEnum.countdown) {
-          <div class="dashboard__time-remaining">{{ countdown$ | async | timer }}</div>
+      <div class="dashboard__time-remaining" [ngClass]="{ paused: paused$ | async }">
+        @switch (state) {
+          @case (statesEnum.countdown) {
+            {{ countdown$ | async | timer }}
+          }
+          @case (statesEnum.training) {
+            {{ remainingTrainingTime$ | async | timer }}
+          }
+          @case (statesEnum.resting) {
+            {{ remainingRestingTime$ | async | timer }}
+          }
         }
-        @case (statesEnum.training) {
-          <div class="dashboard__time-remaining">{{ remainingTrainingTime$ | async | timer }}</div>
-        }
-        @case (statesEnum.resting) {
-          <div class="dashboard__time-remaining">{{ remainingRestingTime$ | async | timer }}</div>
-        }
-      }
+      </div>
     </div>
   </div>
 
@@ -41,13 +43,19 @@
       }
     </div>
     <div class="col-6">
-      <!-- <button type="button" class="btn btn-success">
-        <fa-icon [icon]="faPlay"></fa-icon>
-      </button>
-      <button type="button" class="btn btn-warning">
-        <fa-icon [icon]="faPause"></fa-icon>
-      </button> -->
-      <button type="button" class="btn btn-danger" (click)="stopTraining()">
+      @if (state !== statesEnum.countdown) {
+        @if (paused$ | async) {
+          <button type="button" class="btn btn-success me-2" (click)="play()">
+            <fa-icon [icon]="faPlay"></fa-icon>
+          </button>
+        }
+        @if (!(paused$ | async)) {
+          <button type="button" class="btn btn-warning me-2" (click)="pause()">
+            <fa-icon [icon]="faPause"></fa-icon>
+          </button>
+        }
+      }
+      <button type="button" class="btn btn-danger" (click)="stop()">
         <fa-icon [icon]="faStop"></fa-icon>
       </button>
     </div>

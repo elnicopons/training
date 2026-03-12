@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, interval, Subscription } from 'rxjs';
 import { StatesEnum } from '../constants/states.enum';
 
 const COUNTDOWN = 3;
@@ -9,15 +9,16 @@ export class TrainingService {
   private sets: number;
   private intervals: number;
   private rests: number;
-  private countDownInterval: number;
-  private trainingInterval: number;
-  private restingInterval: number;
+  private countDownInterval: Subscription;
+  private trainingInterval: Subscription;
+  private restingInterval: Subscription;
   remainingSets$ = new BehaviorSubject(0);
   currentSet$ = new BehaviorSubject(0);
   remainingTrainingTime$ = new BehaviorSubject(0);
   remainingRestingTime$ = new BehaviorSubject(0);
   countdown$ = new BehaviorSubject(0);
   state$ = new BehaviorSubject<StatesEnum>(StatesEnum.ready);
+  paused$ = new BehaviorSubject(false);
 
   private setTraining(sets: number, intervals: number, rests: number) {
     this.sets = sets;
@@ -27,28 +28,49 @@ export class TrainingService {
 
   private train() {
     this.state$.next(StatesEnum.training);
-    this.currentSet$.next(this.currentSet$.value + 1);
+
+    this.currentSet$.next(this.currentSet$.getValue() + 1);
     this.remainingSets$.next(--this.sets);
     this.remainingTrainingTime$.next(this.intervals);
-    this.trainingInterval = setInterval(() => {
-      this.remainingTrainingTime$.next(this.remainingTrainingTime$.value - 1);
-      if (this.remainingTrainingTime$.value === 0) {
-        clearInterval(this.trainingInterval);
-        if (this.remainingSets$.value > 0) {
-          this.state$.next(StatesEnum.resting);
-          this.remainingRestingTime$.next(this.rests);
-          this.restingInterval = setInterval(() => {
-            this.remainingRestingTime$.next(this.remainingRestingTime$.value - 1);
-            if (this.remainingRestingTime$.value === 0) {
-              clearInterval(this.restingInterval);
-              this.train();
-            }
-          }, 1000);
+
+    this.resumeTraining();
+  }
+
+  private startRest() {
+    this.state$.next(StatesEnum.resting);
+    this.remainingRestingTime$.next(this.rests);
+    this.resumeResting();
+  }
+
+  private resumeResting() {
+    this.restingInterval = interval(1000).subscribe(() => {
+      this.remainingRestingTime$.next(this.remainingRestingTime$.getValue() - 1);
+
+      if (this.remainingRestingTime$.getValue() === 0) {
+        this.restingInterval.unsubscribe();
+        this.train();
+      }
+    });
+  }
+
+  private resumeTraining() {
+    this.trainingInterval = interval(1000).subscribe(() => {
+      this.remainingTrainingTime$.next(this.remainingTrainingTime$.getValue() - 1);
+
+      if (this.remainingTrainingTime$.getValue() === 0) {
+        this.trainingInterval.unsubscribe();
+
+        if (this.remainingSets$.getValue() > 0) {
+          this.startRest();
         } else {
-          this.stopTraining();
+          this.stop();
         }
       }
-    }, 1000);
+    });
+  }
+
+  get isTrainingSet(): boolean {
+    return !!(this.sets && this.intervals && this.rests);
   }
 
   startTraining(sets: number, intervals: number, rests: number) {
@@ -56,30 +78,47 @@ export class TrainingService {
 
     this.countdown$.next(COUNTDOWN);
     this.state$.next(StatesEnum.countdown);
-    this.countDownInterval = setInterval(() => {
-      this.countdown$.next(this.countdown$.value - 1);
-      if (this.countdown$.value === 0) {
-        clearInterval(this.countDownInterval);
+
+    this.countDownInterval = interval(1000).subscribe(() => {
+      this.countdown$.next(this.countdown$.getValue() - 1);
+      if (this.countdown$.getValue() === 0) {
+        this.countDownInterval.unsubscribe();
         this.train();
       }
-    }, 1000);
+    });
   }
 
-  stopTraining() {
-    clearInterval(this.countDownInterval);
-    clearInterval(this.trainingInterval);
-    clearInterval(this.restingInterval);
+  stop() {
+    this.countDownInterval?.unsubscribe();
+    this.trainingInterval?.unsubscribe();
+    this.restingInterval?.unsubscribe();
 
     this.remainingSets$.next(0);
     this.currentSet$.next(0);
     this.remainingTrainingTime$.next(0);
     this.remainingRestingTime$.next(0);
     this.countdown$.next(0);
+    this.paused$.next(false);
 
     this.state$.next(StatesEnum.ready);
   }
 
-  get isTrainingSet(): boolean {
-    return !!(this.sets && this.intervals && this.rests);
+  pause() {
+    this.paused$.next(true);
+
+    this.trainingInterval?.unsubscribe();
+    this.restingInterval?.unsubscribe();
+  }
+
+  resume() {
+    this.paused$.next(false);
+
+    if (this.state$.getValue() === StatesEnum.training) {
+      this.resumeTraining();
+    }
+
+    if (this.state$.getValue() === StatesEnum.resting) {
+      this.resumeResting();
+    }
   }
 }
