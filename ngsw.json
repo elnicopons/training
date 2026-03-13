@@ -1,0 +1,85 @@
+{
+  "configVersion": 1,
+  "timestamp": 1773372685858,
+  "index": "/training/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/training/favicon.ico",
+        "/training/index.html",
+        "/training/main-GPDCZV2R.js",
+        "/training/manifest.webmanifest",
+        "/training/polyfills-PZSJNBYU.js",
+        "/training/styles-KBIUUB53.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/training/icons/icon-128.png",
+        "/training/icons/icon-144.png",
+        "/training/icons/icon-152.png",
+        "/training/icons/icon-16.png",
+        "/training/icons/icon-192.png",
+        "/training/icons/icon-32.png",
+        "/training/icons/icon-384.png",
+        "/training/icons/icon-48.png",
+        "/training/icons/icon-512.png",
+        "/training/icons/icon-72.png",
+        "/training/icons/icon-96.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/training/favicon.ico": "da0bf0f61fd662dcbbd08db8fd1c2fa42ab0113b",
+    "/training/icons/icon-128.png": "c8247aa75a39778d17faa53232c942e89743a2fe",
+    "/training/icons/icon-144.png": "2fb80928174e6bc5030b517ee1645550f7e98999",
+    "/training/icons/icon-152.png": "628e70a6dfc8a73acc7508fc5870726d2155c9a0",
+    "/training/icons/icon-16.png": "0eae51dae272d3995fc30fff252ed995535207c7",
+    "/training/icons/icon-192.png": "3655ffda218a2a8095aad898d6dfee7c7e9bdf5f",
+    "/training/icons/icon-32.png": "d7b24e51af43472fc266f7747c48fce4c47a1b3b",
+    "/training/icons/icon-384.png": "601d2359460beb55e28bb79f93785015482efc6d",
+    "/training/icons/icon-48.png": "a436cdc468e24d00195b02df71b63959adc2e704",
+    "/training/icons/icon-512.png": "6c751e48f0a4f404b75f1777d7729c9e3bc51c58",
+    "/training/icons/icon-72.png": "c27fd31a452bea1319d3f9d5719f63020d947f40",
+    "/training/icons/icon-96.png": "b5deb33af162770e895d6b071bb752781d6f921a",
+    "/training/index.html": "c713375672c94371c5fca5a17cf92aae9fd92e8e",
+    "/training/main-GPDCZV2R.js": "8b921b2e7fa34ba9d784f615cc5d82870200c9cc",
+    "/training/manifest.webmanifest": "57cad60b85166ea72184da5821aca628fce3f540",
+    "/training/polyfills-PZSJNBYU.js": "38c9b370c0e9f9f932fe77ca39c98f09dc174b4d",
+    "/training/styles-KBIUUB53.css": "1caba60f504a10cc49176a1de8c188b9c9c3474d"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
