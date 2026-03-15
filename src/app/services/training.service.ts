@@ -55,7 +55,12 @@ export class TrainingService {
 
   private resumeTraining() {
     this.trainingInterval = interval(1000).subscribe(() => {
-      this.remainingTrainingTime$.next(this.remainingTrainingTime$.getValue() - 1);
+      const remaining = this.remainingTrainingTime$.getValue() - 1;
+      this.remainingTrainingTime$.next(remaining);
+
+      if (remaining <= COUNTDOWN && remaining > 0) {
+        this.countdown$.next(remaining);
+      }
 
       if (this.remainingTrainingTime$.getValue() === 0) {
         this.trainingInterval.unsubscribe();

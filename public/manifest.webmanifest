@@ -1,6 +1,6 @@
 {
-  "name": "training",
-  "short_name": "training",
+  "name": "Crazy TrainIng",
+  "short_name": "Crazy TrainIng",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
