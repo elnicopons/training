@@ -1,5 +1,6 @@
-@use 'bootstrap/scss/bootstrap' as bs;
-
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
 
 .app {
   &__update {
@@ -31,7 +32,7 @@
   }
 }
 
-@include bs.media-breakpoint-up(sm) {
+@include media-breakpoint-up(sm) {
   .app {
     &__update {
       width: auto;
