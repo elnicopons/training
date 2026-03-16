@@ -1,3 +1,13 @@
+@if (appService.updateAvailable()) {
+  <div class="app__update">
+    <ngb-alert type="primary" [dismissible]="false">
+      Hay una actualización disponible
+      <button type="button" class="btn btn-primary" (click)="update()">
+        <fa-icon [icon]="faCloudArrowDown"></fa-icon>
+      </button>
+    </ngb-alert>
+  </div>
+}
 <div class="app__sound">
   <button
     type="button"

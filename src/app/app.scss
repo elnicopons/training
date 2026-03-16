@@ -1,4 +1,17 @@
+@use 'bootstrap/scss/bootstrap' as bs;
+
+
 .app {
+  &__update {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 90%;
+    text-align: center;
+  }
+
   &__sound {
     position: fixed;
     right: 0;
@@ -15,5 +28,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+@include bs.media-breakpoint-up(sm) {
+  .app {
+    &__update {
+      width: auto;
+    }
   }
 }
